@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Type Writer Effect</title>
+    <style>
+        html{
+            margin: 0px;
+            box-sizing: border-box;
+            text-overflow: hidden;
+        }
+        .container
+        {
+            position: absolute;
+            top: 10%;
+            left:30%;
+            text-align: center;	
+            font-size: 3em;
+            font-weight: thicker;
+            width: 50%;
+            height: auto;
+            display: block;
+        }
+        .container input{
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            display:inherit;
+            font-size: 1em;
+            background-color: transparent;
+        }
+        #viewanimation
+        {
+        	margin-top: 20px;
+            width: 20%;
+            font-size :1em;
+            border-radius: 10px;
+            background-image: linear-gradient(to right,green,yellow);
+        }
+        #tex
+        {
+        	font-size: 2em;
+        	font-weight: thick;
+        }
+        #blinkingElement{
+        	display: inline-block;
+        	animation: blinking 1s linear 1s infinite;
+        }
+
+        @keyframes blinking{
+        	0%, 50%{
+        		opacity: 0
+        	}
+        	50%, 100%{
+        		opacity: 1
+        	}
+        }
+        body{
+        	background-image: url('http://www.borneomainland.com/wp-content/uploads/2020/11/Online-Animation-Services1.jpg');
+        	background-repeat: no-repeat;
+
+        	background-size: cover;
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        Enter Your Text
+        <input type="text" name="typetext" value="" id="texttype">
+        <button id="viewanimation">
+            Show
+        </button>
+        <p id="tex">
+        	<span id = "textishere"> 
+        		
+        	</span>
+        	<span id = "blinkingElement">
+        		|
+        	</span>
+        </p>
+    </div>
+</body>
+<script type="text/javascript" src="typewriter.js"></script>
+</html>

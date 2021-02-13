@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	
+	<style type="text/css">
+		body{
+	margin: 0px 0px 0px 0px;
+	padding: 0px 0px 0px 0px;
+	box-sizing: border-box;
+	display: block;
+}
+*{
+	box-sizing: border-box;
+}
+#navigation{
+}
+.navbar1>h2{
+	float: left;
+	width: 20%;
+	color: white;
+	background-color: transparent;
+	margin-left: 2px;
+}
+.navbar1 > ul
+{
+	list-style-type: none;
+	margin-left:3px;
+	padding: 1px 3px 1px 3px;
+	height: 60px;
+	width: 100%;
+	background-color: black;
+}
+.navbar1>ul>li{
+	
+	display: inline-block;
+	height: inherit;
+	width: 10%;
+	padding-top:1%;
+	text-align: center;
+	font-size: 1.5em;
+	color:white;
+	background-color: transparent;
+}
+.navbar1>ul>li:hover{
+	font-size: 1.8em;
+	}
+.centercontainer{
+	top:10%;
+	left: 10%;
+	right: 10%;
+	position: relative;
+	width: 80%;
+}
+.centercontainer>.formsdiv{
+	border-style: groove;
+}
+.fields{
+	margin-top: 3%;
+}
+.fields1>.labe{
+	font-size: 1.4em;
+	width: 30%;
+	margin-right:10%; 
+}
+.fields1>input[type=text]{
+	width: 70%;
+	padding: 8px;
+	font-size: 1.1em;
+}
+#rad{
+	width: 60%;
+	display: inline-block;
+}
+#rad>input[type=radio]
+{
+	padding: 8px;
+	width: 5%;
+	height: 15px;	
+}
+#rad>label{
+	font-size: 1.1em;
+}
+.buttons1{
+	width:10%;
+	height: 2em;
+	background-color: skyblue;
+	border-color: transparent;
+	border-radius: 10px;
+	font-size: 1.1em;
+	font-weight: bolder;
+	color: white;
+}
+.buttons1:focus{
+	background-color: silver;
+}
+.formdiv{
+	padding: 2% 3% 2% 3%;
+	border-style: solid;
+	border-radius: 10px;
+	border-color: silver;
+}
+table{
+	width: 100%;
+	border-collapse: collapse;
+	color:white;
+	background-color:black; 
+}
+.row{
+	width: 100%;
+	
+}
+td>input[type=text]{
+	background-color: transparent;
+	font-size: 1.1em;
+	color: white;
+	text-align: center;
+}
+.row>td{
+	width: 20%;
+	font-size: 1.2em;
+	text-align: center;
+	color:white;
+}
+.operational{
+	background-color: transparent;
+	font-size: 0.86em;
+	color: white;
+	border: none;
+}
+.left{
+	float: left;
+}
+.right{
+	float: right;
+}
+.ifalert{
+	width: 100%;
+	color: rgb(177 97 12);
+	position: relative;
+}
+	</style>
+</head>
+<body>
+<navbar class="navbar1" id="navigation">
+	<h2>
+		Jerry's Library
+	</h2>
+	<ul>
+		<li>
+			Home
+		</li>
+		<li>
+			contact
+		</li>
+	</ul>
+</navbar>
+<p id="ifalert">
+	
+</p>
+<div class="centercontainer">
+	<h1>
+		Jerry's Library
+	</h1>
+	<div class="formdiv">
+		<div class="fields1">
+			<label class="labe">
+				Name
+			</label>
+			&nbsp
+			<input type="text" id="BookName" placeholder="Enter Book Name here">
+		</div>
+		<br/>
+		<div class="fields1">
+			<label class="labe">
+				Author
+			</label>
+			<input type="text" id = "BookAuthor" placeholder="Enter Author Name here">
+		</div>
+		<br/>
+		<div class="fields1">
+		
+				<label class="labe">
+					Type
+				</label>
+			
+			<div id="rad">
+				<input type="radio" name="type" id = "ficrad" value="Fictional">
+				<label>
+					Fictional
+				</label>
+				<br/>
+				<input type="radio" name="type" id = "comprad" value="Computer Programming">
+				<label>
+					Computer Programming
+				</label>
+				<br/>
+				<input type="radio" name="type" id = "insrad" value="Inspirational">
+				<label>
+					Inspirational
+				</label>
+			</div>
+		</div>
+		<br/>
+		<button id = "addbook" class="buttons1">
+		Add Book
+		</button>
+	</div>
+	<div class="booksarea">
+		<h2>
+			Your Books is here
+		</h2>
+		<table id = "booktable">
+			<tr class="row">
+				<td>
+					Name
+				</td>
+				<td>
+					Author
+				</td>
+				<td>
+					Type
+				</td>
+				<td>
+					Operations
+				</td>
+				<td>
+					Date and Time
+				</td>
+			</tr>
+		</table>
+	</div>
+
+</div>
+</body>
+<script type="text/javascript">
+	var a ;
+	var isediting = false;
+	var tempdata = [];
+	var counter = -1;
+
+	function clearinputs(abc) {
+		abc.value = "";
+	}
+	function disabling(item)
+	{
+		item.setAttribute("disabled","true");
+	}
+	function Editdone() {
+		isediting = false;
+		let a = this.parentNode.parentNode.parentNode.querySelectorAll("input[type=text]");
+		a.forEach(disabling);
+		getEditback();
+	}
+	function disablinginputs(item)
+	{
+		item.value = tempdata[counter];
+		counter++;
+		
+	}
+
+	function createalert(boldedtext,normaltext,type)
+	{
+		let a = document.getElementById("ifalert");
+		let tempspan = document.createElement('span');
+		tempspan.innerHTML = "<strong>"+boldedtext+"</strong>"+normaltext;
+		if(type == "success"){
+			a.style.backgroundColor = "GREEN";
+		}
+		if(type == "warning")
+		{
+			a.style.backgroundColor = "yellow";
+		}
+		a.appendChild(tempspan);
+		setTimeout(function() {
+			a.innerHTML = "";
+		},5000);
+	}
+
+
+	function getEditback()
+	{
+		let b = document.getElementById("EditButton");
+		b.removeEventListener("click",Editdone);
+		b.innerHTML = "Edit";
+		b.addEventListener("click",editbooks);
+		document.getElementById("Cancel").remove();
+	}
+	function editcanceled() {
+		isediting = false;
+		let a = this.parentNode.parentNode.parentNode.querySelectorAll("input[type=text]");
+		a.forEach(disablinginputs);
+		getEditback();
+	}
+
+	function enablinginputs(item)
+	{
+		counter++; 
+		tempdata[counter] = item.value;
+		item.removeAttribute("disabled")
+	}
+	function editbooks() {
+
+		isediting = true;
+		var ab = this.parentNode.parentNode.parentNode.querySelectorAll("input[type=text]");
+		ab.forEach(enablinginputs);
+		let tempOk = document.getElementById("EditButton");
+		tempOk.removeEventListener("click",editbooks);
+		let tempCancel = document.createElement("button");
+		tempCancel.setAttribute("class","operational");
+		tempOk.innerHTML = "Save";
+		tempCancel.innerHTML = "Cancel";
+		tempCancel.id = "Cancel";
+		tempOk.addEventListener("click",Editdone);
+		document.getElementById("operationalcol").insertBefore(tempCancel,document.getElementById("DeleteButton"));
+		tempCancel.addEventListener("click",editcanceled);
+		counter = 0;
+		
+	}
+
+	function deletebooks() {
+		if(confirm("Are you really want to Delete This"))
+		{
+			this.parentNode.parentNode.parentNode.remove();	
+		}
+	}
+
+	function additem(name,authr,slctval)
+	{
+		let values = [name,authr,slctval];
+		let tabl = document.getElementById("booktable");
+		let temprow = document.createElement('tr');
+		temprow.setAttribute("class","row");
+		for (let i = 0; i <= 2;i++) {
+			let tempcol = document.createElement("td");
+			tempcol.id = tabl.rows.length+"row"+i+"col";
+			let abc = "";
+			if(i==2){
+				abc = values[i];
+			}
+			else
+			{
+				abc = "<input type='text' disabled = 'true' value = '"+ values[i]+"' id = "+tempcol.id+">";
+			}
+			tempcol.innerHTML = abc;
+			temprow.appendChild(tempcol);
+		}
+		let tempcol = document.createElement("td");
+		let tempspan = document.createElement('span');
+		tempspan.id = "operationalcol";
+		let tempedit = document.createElement('button');
+		tempedit.innerHTML = "Edit";
+		tempedit.addEventListener("click",editbooks);
+		tempedit.id ="EditButton"
+		tempedit.setAttribute("class","operational");
+		let tempdelete = document.createElement('button');
+		tempdelete.innerHTML = "Delete";
+		tempdelete.id = "DeleteButton";
+		tempdelete.addEventListener("click",deletebooks);
+		tempdelete.setAttribute("class","operational right");
+		let tempdatetime = document.createElement("td");
+		tempdatetime.innerHTML = new Date().toUTCString().replace("GMT","");
+		tempspan.appendChild(tempedit);
+		tempspan.appendChild(tempdelete);
+		tempcol.appendChild(tempspan);
+		temprow.appendChild(tempcol);
+		temprow.appendChild(tempdatetime);
+		tabl.appendChild(temprow);
+	}
+
+	function Nonespec(st)
+	{
+		let spe = '!@#$%^&*()';
+		for(let i = 0;i < spe.length-1;i++)
+		{
+			for (var j = 0;j<st.length-1; j++) {
+				if(st.charAt(j) == spe.charAt(i))
+				{
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
+	function addbook() {
+		function getradioval(item) {
+			if(item.checked)
+			{
+				selectedval = item.value; 
+			}
+		}
+		function validated() {
+			if(name.value.length >= 5 && name.value.length <= 20 && isNaN(name.value) && Nonespec(name.value) && bookauthor.value.length>0)
+			{
+				return true;
+			}
+			return false;	
+		}
+		let name = document.getElementById("BookName");
+		let bookauthor = document.getElementById("BookAuthor");
+		let selectedval;
+		a.forEach(getradioval);
+		if(selectedval.length<=0)
+		{
+			alert("Please Select type");
+		}
+
+		if(validated())
+		{
+			additem(name.value,bookauthor.value,selectedval);
+			clearinputs(name);
+			clearinputs(bookauthor);
+			createalert("Congratulations!","Your book is added successfully","success");	
+			
+
+		}
+		else
+		{
+			createalert("Input Error!","There is some error in  your input","warning");
+		}
+	}
+	function initialiser() {
+		document.getElementById('addbook').addEventListener("click",addbook);
+		a = document.querySelectorAll("input[type=radio]");
+		a[0].checked = true;
+		
+	
+	}
+	document.addEventListener("DOMContentLoaded",initialiser);
+	
+</script>
+</html>
