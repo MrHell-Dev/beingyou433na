@@ -82,7 +82,6 @@
 	font-size: 1.1em;
 }
 .buttons1{
-	width:10%;
 	height: 2em;
 	background-color: skyblue;
 	border-color: transparent;
@@ -124,22 +123,23 @@ td>input[type=text]{
 }
 .operational{
 	background-color: transparent;
-	font-size: 0.86em;
+	font-size: 0.65em;
 	color: white;
 	border: none;
 }
-.left{
-	float: left;
-}
-.right{
-	float: right;
-}
+
 .ifalert{
 	width: 100%;
 	color: rgb(177 97 12);
 	position: relative;
 }
-	</style>
+.updatebut
+{
+	background-color: orange;
+}
+
+</style>
+
 </head>
 <body>
 <navbar class="navbar1" id="navigation">
@@ -162,7 +162,7 @@ td>input[type=text]{
 	<h1>
 		Jerry's Library
 	</h1>
-	<div class="formdiv">
+	<div class="formdiv" id = "form1">
 		<div class="fields1">
 			<label class="labe">
 				Name
@@ -234,31 +234,14 @@ td>input[type=text]{
 </div>
 </body>
 <script type="text/javascript">
-	var a ;
-	var isediting = false;
+	var ac ;
+	var editing = false;
 	var tempdata = [];
 	var counter = -1;
 
 	function clearinputs(abc) {
 		abc.value = "";
 	}
-	function disabling(item)
-	{
-		item.setAttribute("disabled","true");
-	}
-	function Editdone() {
-		isediting = false;
-		let a = this.parentNode.parentNode.parentNode.querySelectorAll("input[type=text]");
-		a.forEach(disabling);
-		getEditback();
-	}
-	function disablinginputs(item)
-	{
-		item.value = tempdata[counter];
-		counter++;
-		
-	}
-
 	function createalert(boldedtext,normaltext,type)
 	{
 		let a = document.getElementById("ifalert");
@@ -277,72 +260,133 @@ td>input[type=text]{
 		},5000);
 	}
 
-
-	function getEditback()
-	{
-		let b = document.getElementById("EditButton");
-		b.removeEventListener("click",Editdone);
-		b.innerHTML = "Edit";
-		b.addEventListener("click",editbooks);
-		document.getElementById("Cancel").remove();
-	}
-	function editcanceled() {
-		isediting = false;
-		let a = this.parentNode.parentNode.parentNode.querySelectorAll("input[type=text]");
-		a.forEach(disablinginputs);
-		getEditback();
+	function setSelectedrad(vale = null) {
+		for (let i = 0; i < ac.length; i++) {
+			if(ac[i].value == vale)
+			{	
+				ac[i].checked = true;
+			}	
+		}
+		
 	}
 
-	function enablinginputs(item)
-	{
-		counter++; 
-		tempdata[counter] = item.value;
-		item.removeAttribute("disabled")
-	}
 	function editbooks() {
-
-		isediting = true;
-		var ab = this.parentNode.parentNode.parentNode.querySelectorAll("input[type=text]");
-		ab.forEach(enablinginputs);
-		let tempOk = document.getElementById("EditButton");
-		tempOk.removeEventListener("click",editbooks);
-		let tempCancel = document.createElement("button");
-		tempCancel.setAttribute("class","operational");
-		tempOk.innerHTML = "Save";
-		tempCancel.innerHTML = "Cancel";
-		tempCancel.id = "Cancel";
-		tempOk.addEventListener("click",Editdone);
-		document.getElementById("operationalcol").insertBefore(tempCancel,document.getElementById("DeleteButton"));
-		tempCancel.addEventListener("click",editcanceled);
-		counter = 0;
+		if(editing == true)
+		{
+			alert("please finish first editing");	
+		}
+		else
+		{
+			editing = true;
+			this.style.display = "none";
+			let addbook = document.getElementById("addbook");
+			addbook.style.display = "none";
+			let updatebook = document.createElement("button");
+			updatebook.id = "updatebook";
+			updatebook.innerHTML = "Update";
+			updatebook.setAttribute("class","buttons1 updatebut");
+			updatebook.addEventListener("click",updateloca);
+			document.getElementById("form1").insertBefore(updatebook,addbook);
+			let temp = this.parentNode.parentNode.parentNode;
+			let x = getindex(temp.cells[0].innerHTML,temp.cells[1].innerHTML,temp.cells[2].innerHTML,temp.cells[4].innerHTML);
+			localStorage.setItem("index",x);
+			var setselected = temp.cells[2].innerHTML;
+			let book = document.getElementById("BookName");
+			let author = document.getElementById("BookAuthor");
+			book.value = temp.cells[0].innerHTML;
+			author.value = temp.cells[1].innerHTML;
+			setSelectedrad(temp.cells[2].innerHTML);
+		}
+		
 		
 	}
 
 	function deletebooks() {
+		let temp = this.parentNode.parentNode.parentNode;
 		if(confirm("Are you really want to Delete This"))
 		{
-			this.parentNode.parentNode.parentNode.remove();	
+			temp.remove();
+			let x = getindex(temp.cells[0].innerHTML,temp.cells[1].innerHTML,temp.cells[2].innerHTML,temp.cells[4].innerHTML);
+			deleteone(x);
 		}
 	}
 
-	function additem(name,authr,slctval)
+
+function getindex(bookname,author,type,date) {
+
+		let tempdatabook = JSON.parse(localStorage.getItem("databook"));
+		for (let i = 0; i < tempdatabook.items.length; i++) {
+				if(tempdatabook.items[i]["bookname"] == bookname && tempdatabook.items[i]["author"] == author && tempdatabook.items[i]["type"] == type && tempdatabook.items[i]["date"] == date)
+				{
+					return i;
+				}
+				
+			}
+		return -1;
+	}
+
+function updateloca() {
+
+		let book = document.getElementById("BookName");
+		let author = document.getElementById("BookAuthor");
+		let selectedval = getradio();
+		let y = localStorage.getItem("index");
+		localStorage.removeItem("index");
+		if(y>=0)
+		{
+				let tempdatabook = JSON.parse(localStorage.getItem("databook"));
+				tempdatabook.items[y]["bookname"] = book.value;
+				tempdatabook.items[y]["author"] = author.value;
+				tempdatabook.items[y]["type"] = selectedval;
+				tempdatabook.items[y]["date"] = getdateformat();
+				localStorage.removeItem("databook");
+				localStorage.removeItem("index");
+				localStorage.setItem("databook",JSON.stringify(tempdatabook));
+				alert("Updated");
+				window.location.reload();	
+		}	
+		else
+		{
+			alert("some kind of error");
+		}
+		editing = false;	
+	}
+
+	function deleteone(event,ind)
 	{
-		let values = [name,authr,slctval];
+		let tempdatabook = JSON.parse(localStorage.getItem("databook"));
+		let y = getindex();
+		for (let i = 0; i <tempdatabook.items.length; i++) {
+			if(y <= i)
+			{
+				if(i+1<=tempdatabook.items.length-1)
+				{
+					tempdatabook.items[i]["bookname"] =tempdatabook.items[i+1]["bookname"];	
+				}
+				 
+			}
+		}
+		tempdatabook.items.pop();
+		localStorage.setItem("databook",JSON.stringify(tempdatabook));
+	}
+
+	function getdateformat() {
+		let datetime = new Date();
+		let result =datetime.getDate()+"\\"+datetime.getMonth()+"\\"+datetime.getFullYear();
+		return result; 
+	}
+
+
+	function additem(name,authr,slctval,date=null)
+	{
+		let values = [name,authr,slctval,date];
 		let tabl = document.getElementById("booktable");
 		let temprow = document.createElement('tr');
 		temprow.setAttribute("class","row");
 		for (let i = 0; i <= 2;i++) {
 			let tempcol = document.createElement("td");
 			tempcol.id = tabl.rows.length+"row"+i+"col";
-			let abc = "";
-			if(i==2){
-				abc = values[i];
-			}
-			else
-			{
-				abc = "<input type='text' disabled = 'true' value = '"+ values[i]+"' id = "+tempcol.id+">";
-			}
-			tempcol.innerHTML = abc;
+			tempcol.innerHTML = values[i];
 			temprow.appendChild(tempcol);
 		}
 		let tempcol = document.createElement("td");
@@ -358,15 +402,41 @@ td>input[type=text]{
 		tempdelete.id = "DeleteButton";
 		tempdelete.addEventListener("click",deletebooks);
 		tempdelete.setAttribute("class","operational right");
-		let tempdatetime = document.createElement("td");
-		tempdatetime.innerHTML = new Date().toUTCString().replace("GMT","");
+		let tempcol1 = document.createElement("td");
+		
+		tempcol1.innerHTML = getdateformat();
 		tempspan.appendChild(tempedit);
 		tempspan.appendChild(tempdelete);
 		tempcol.appendChild(tempspan);
 		temprow.appendChild(tempcol);
-		temprow.appendChild(tempdatetime);
+		temprow.appendChild(tempcol1);
 		tabl.appendChild(temprow);
+		if(values[3] == null)
+		{
+			values[3] = getdateformat();
+			addloca(values[0],values[1],values[2],values[3]);
+		}
 	}
+
+	function addloca(book,author,type,date) {
+		let tempobj = {"bookname":book,"author":author,"type":type,"date":date};
+		let tempdatabook = JSON.parse(localStorage.getItem("databook"));
+		if(tempdatabook == null)
+		{
+			let items = [];
+			items.push(tempobj);
+			tempdatabook = {items};
+		}
+		else
+		{
+			tempdatabook.items.push(tempobj);
+		}
+		localStorage.setItem("databook",JSON.stringify(tempdatabook));
+
+	}
+
+
+
 
 	function Nonespec(st)
 	{
@@ -383,13 +453,17 @@ td>input[type=text]{
 		return true;
 	}
 
-	function addbook() {
-		function getradioval(item) {
-			if(item.checked)
-			{
-				selectedval = item.value; 
+	function getradio() {
+			for (let i = 0; i < ac.length; i++) {
+				if(ac[i].checked)
+				{
+					return ac[i].value;
+				}
 			}
 		}
+
+	function addbook() {
+		
 		function validated() {
 			if(name.value.length >= 5 && name.value.length <= 20 && isNaN(name.value) && Nonespec(name.value) && bookauthor.value.length>0)
 			{
@@ -399,8 +473,8 @@ td>input[type=text]{
 		}
 		let name = document.getElementById("BookName");
 		let bookauthor = document.getElementById("BookAuthor");
-		let selectedval;
-		a.forEach(getradioval);
+		var selectedval = getradio();
+
 		if(selectedval.length<=0)
 		{
 			alert("Please Select type");
@@ -420,13 +494,26 @@ td>input[type=text]{
 			createalert("Input Error!","There is some error in  your input","warning");
 		}
 	}
+
+	function getall() {
+		let tempdatabook = JSON.parse(localStorage.getItem("databook"));
+		if(tempdatabook == null)
+		{
+			return "";
+		}
+		for (let i = 0; i < tempdatabook.items.length; i++) {
+				additem(tempdatabook.items[i]["bookname"],tempdatabook.items[i]["author"],tempdatabook.items[i]["type"],tempdatabook.items[i]["date"]);
+			}
+	
+		}
+
 	function initialiser() {
 		document.getElementById('addbook').addEventListener("click",addbook);
-		a = document.querySelectorAll("input[type=radio]");
-		a[0].checked = true;
-		
-	
+		ac = document.querySelectorAll("input[type=radio]");
+		ac[0].checked = true;
+		getall();
 	}
+
 	document.addEventListener("DOMContentLoaded",initialiser);
 	
 </script>
