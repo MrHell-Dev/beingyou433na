@@ -145,7 +145,8 @@ function removealert() {
 				tempdivbody.appendChild(temppara);
 				tempdivbody.appendChild(tempbut);
 				tempdiv.appendChild(tempdivbody);
-				document.getElementById("notearea").appendChild(tempdiv);
+				let mainbody = document.getElementById("notearea");
+				mainbody.insertBefore(tempdiv,mainbody.childNodes[0]);
 			clearfields();
 			if(flag){
 				addloca(title,Desc);
