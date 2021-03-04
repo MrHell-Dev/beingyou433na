@@ -6,15 +6,17 @@
 	<style type="text/css">
 		*{
 			box-sizing: border-box;
+			border-radius: 5px;
 		}
+	.spiralgif{
+	    background-image: url('http://i.stack.imgur.com/kx8MT.gif');
+	    background-size: cover;
+	    background-size: 100% 100%;
+	}
 	body{
 		
-    background-image: url('http://i.stack.imgur.com/kx8MT.gif');
-    background-size: cover;
-    background-size: 100% 100%;
-    padding:0;
-    margin:0;
-
+		background: conic-gradient(black,darkgreen, skyblue, blue, gray);
+    	background-size: cover;
 	}
 	button{
 		background-color: transparent;
@@ -24,10 +26,14 @@
 		position: relative;
   		text-decoration: none;
 	}
+	.nav-link:hover
+	{
+		font-size: 1.25em;
+	}
 	.underlinable_text:hover::after{
 		content: "";
   		position: absolute;
-  		border-bottom: 1mm solid orange;
+  		border-top: 1mm solid orange;
   		animation: borderline 1s linear 0s infinite alternate;
 	}
 	@keyframes borderline{
@@ -41,7 +47,7 @@
 		}
 		50%{
 			left:25%;
-			right:25%;	
+			right:25%;
 		}
 		100%{
 			left:0%;
@@ -83,13 +89,36 @@
 		width: 30%;
 		height: 400px;
 	}
+	.half{
+		margin-left:7%;
+		width: 50%;
+	}
+	.skillq
+	{
+		border-style: solid;
+		border-color: transparent;
+		border-bottom-color: orange;
+	    border-width: 7px;
+    	border-radius: 8px;
+    	animation: widthani 3s ease-in-out 0s infinite;
+	}
+
+	@keyframes widthani{
+		from{
+			width: 0%;
+		}
+		to{
+			width: 100%;
+		}
+	}
+
 </style>
 </head>
 
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-transparent sticky-top " id = "navbar1">
   <a class="navbar-brand" href="#">My World</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" id="togg" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
@@ -102,7 +131,7 @@
     </div>
   </div>
 </nav>
-<div class="container-fluid classy">
+<div class="classy container spiralgif">
 	<div class="Home p-3">
 		<div class = "textofprofile">
 			<div id="heading">
@@ -111,7 +140,7 @@
 				</h5>
 				<h5 class="changable-title">
 				</h5>
-				<h5 class="" = "blinkingcursor">
+				<h5 class = "blinkingcursor">
 					|
 				</h5>
 			</div>
@@ -122,10 +151,12 @@
 		<img src="https://www.solidbackgrounds.com/images/2560x1600/2560x1600-dark-gray-solid-color-background.jpg" class="float-right profileimg" id = "first" alt="my image">
 	</div>
 </div>
+<br/>
+<br/>
+<br/>
 <div class="Aboutme classy container bg-dark ">
 	<h2 class="text-center text-primary">
 			About Me
-
 	</h2>
 	<p class="text-center text-jsutify">
 				Who Am I
@@ -153,10 +184,48 @@
 <br/>
 <br/>
 <br/>
-<div class="Services classy container bg-dark ">
+<div class="Skills container classy bg-dark ">
+	<h2 class="text-center text-primary">
+			Skills
+	</h2>
+	<div class = "textofprofile float-left">
+		<div id="heading">
+			<h5>
+				I am Navdeep Singh Chauhan. A
+			</h5>
+			<h5 class="changable-title">
 
-
-	
+			</h5>
+			<h5 class = "blinkingcursor">
+					|
+			</h5>
+			</div>
+			<div id = "Summaboutme" class="text-justify">
+				loreLorem ipsum duis et cupidatat excepteur cupidatat irure sit adipisicing quis esse veniam 	quis sit occaecat esse sunt cupidatat irure veniam culpa enim ea est sit dolore quis occaecat sunt sunt duis proident sint ut pariatur do laboris.
+			</div>
+		</div>
+	<div class=" half text-justify d-inline-block p-2" id = "skills">
+		<div class="row p-3 w-50" id = "HTMLSkill">
+			<span class = 'skillq'>
+				HTML
+			</span>
+		</div>
+		<div class="row p-3  w-50" id = "HelloSkill">
+			<span class = 'skillq'>
+				Hello
+			</span>
+		</div>
+	</div>
+</div>
+<br/>
+<br/>
+<br/>
+<div class="Experience container classy bg-dark ">
+</div>
+<br/>
+<br/>
+<br/>
+<div class="ContactMe container classy bg-dark ">
 </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -180,8 +249,18 @@
 		}		
 
 	}
-
-	
+	function addskill(name,percent) {
+		let x = document.getElementById("skills");
+		let tempdiv = document.createElement("div");
+		tempdiv.id = name+"Skill";
+		tempdiv.style.width = ""+percent+"%";
+		tempdiv.setAttribute("class","row p-3");
+		let tempspan = document.createElement('span');
+		tempspan.setAttribute("class","skillq");
+		tempspan.innerHTML = name;
+		tempdiv.appendChild(tempspan);
+		x.insertBefore(tempdiv,x.childNodes[0]);
+	}
 
 	function changetitleauto() {
 		let a = document.querySelectorAll(".changable-title");
@@ -200,9 +279,10 @@
 			}
 			if(counter<=value.length)
 			{
-					a[0].innerHTML = value.slice(0,counter);
-					a[1].innerHTML = value.slice(0,counter);
-					counter++;
+				for (let i = a.length - 1; i >= 0; i--) {
+					a[i].innerHTML = value.slice(0,counter);
+				}
+				counter++;
 			}
 			else
 			{
@@ -226,6 +306,11 @@
 		
 		document.addEventListener("scroll",makenavbarsticky);
 		changetitleauto();
+		addskill("Css",60);
+		addskill("Css",70);
+		addskill("Css",80);
+		addskill("Css",90);
+		addskill("Css",100);
 		
 	}
 
