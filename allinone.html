@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+</body>
+<script type="text/javascript">
+	let Noofquestions = 20;
+	function initialiser() {
+		for (var i = 1; i <= Noofquestions; i++) {
+			let con = document.createElement("div");
+			con.style.width = "100%";
+			let a = document.createElement("h3")
+			a.innerHTML = "Ans"+i;
+			let b = document.createElement("button");
+			b.innerHTML = "Get Answer";
+			b.id = "Ans"+i;
+			let fun = answer1;
+			b.addEventListener("click",getresult);
+			con.appendChild(a);
+			con.appendChild(b);
+			document.body.appendChild(con);
+
+		}
+	}
+
+	//answer1
+
+	function answer1() {
+		let a,b,c,d;
+		a = 5;
+		b = 10;
+		c = "I am a ";
+		d = "Developer";
+		console.log((a+b)+"  "+c+d);
+	}
+
+	//answer2
+
+	function answer2() {
+		let a = parseInt(prompt("Enter 1st No."));
+		let b = parseInt(prompt("Enter 2nd No."));
+		if(validate(a) && validate(b))
+		{
+			console.log("Add:"+add(a,b));
+			console.log("Multiply:"+multiply(a,b));
+			console.log("divide:"+divide(a,b));
+			console.log("subtract:"+subtract(a,b));
+		}
+		else
+		{
+			console.log("SomeThing Wrong with your inputs");
+		}
+	}
+
+
+	//answer3
+
+	function answer3() {
+		let a = parseInt(prompt("Enter 1st No."));
+		let b = parseInt(prompt("Enter 2nd No."));
+		if(validate(a) && validate(b))
+		{
+			console.log("Add:"+add(a,b));
+			console.log("Multiply:"+multiply(a,b));
+			console.log("divide:"+divide(a,b));
+			console.log("subtract:"+subtract(a,b));
+		}
+		else
+		{
+			console.log("SomeThing Wrong with your inputs");
+		}
+	}
+
+
+	//answer 4
+
+	function add(a,b) {
+		return a+b;
+	}
+	function multiply(a,b) {
+		return a*b;
+	}
+	function divide(a,b) {
+		return a/b;
+	}
+	function subtract(a,b) {
+		return a-b;
+	}
+
+	function mathOperation(a,b,c) {
+		let result;
+		switch(c)
+		{
+			case "+":
+				result = add(a,b);
+				break;
+			case "-":
+				result = subtract(a,b);
+				break;
+			case "/":
+				result = divide(a,b);
+				break;
+			case "*":
+				result = multiply(a,b);
+				break;
+			default:
+				console.log("Unknown operation");
+		}
+		console.log(result);
+	}
+
+	function validate(a) {
+		if(a.toString() == "NaN" || a<0)
+		{
+			return false;
+		}
+		return true;
+	}
+
+	function validateoperator(a) {
+		arr = ["+","-","/","*"];
+		for (var i = arr.length - 1; i >= 0; i--) {
+			if(arr[i] == a)
+			{
+				return true;
+			}
+
+		}
+		return false;
+	}
+
+	function answer4(event) {
+		let a = parseInt(prompt("Enter 1st No."));
+		let b = parseInt(prompt("Enter 2nd No."));
+		let c = prompt("Enter Operation like '+ - / *'");
+		if(validate(a) && validate(b) && validateoperator(c))
+		{
+			mathOperation(a,b,c);
+		}
+		else
+		{
+			console.log("SomeThing Wrong with your inputs");
+		}
+		
+	}
+
+	// answer 5
+	function concat(a) {
+		let st = "It was really _____ , and we _____ ourselves _____!";
+		let temparr = a;
+		let arr = st.split("_____");
+		let resultst = "";
+		for (let i = 0; i < arr.length; i++) {
+			j = i;
+			if(j<temparr.length)
+			{
+				resultst = resultst.concat(arr[i],temparr[j]);	
+			}
+			else
+			{
+				resultst = resultst.concat(arr[i]);
+			}
+		}
+		console.log(resultst);
+	}
+
+	function answer5() {
+		concat(["hello","hey","bye"]);
+	}
+
+	//answer6
+
+	function answer6(event) 
+	{
+		let rang = parseInt(prompt("Enter the Number:"));
+		if(rang.toString() == "NaN" || rang<0)
+		{
+			console.log("Please enter a Valid No.");
+		}
+		else
+		{
+			console.log(isEven(rang));
+		}
+	}
+
+
+
+	//answer7
+
+	function chaintoswitch(val) {
+		var answer = "";
+		 switch(val){
+		 	case "bob":
+		 		answer = "Marley";
+		 		break;
+		 	case 42:
+		 		answer = "The Answer";
+		 		break;
+		 	case 1:
+		 		answer = "There is no #1";
+		 		break;
+		 	case 99:
+		 		answer = "Missed me by this much!";
+		 		break;
+		 	case 7:
+		 		answer = "Ate Nine";
+		 		break;
+		 	default:
+		 		answer = "";
+		 }
+		 return answer
+	}
+	function answer7(event) 
+	{
+	console.log(chaintoswitch(prompt("Enter Question here")));
+	}
+
+
+	//answer8
+	function answer8() {
+	let a;
+	let z = [];
+	do{
+		a = prompt("Enter anything");
+		z.push(a);
+	}while(a!="exit")
+	console.log(z);
+	}
+
+	//answer9
+
+	function showpattern(n=0) {
+		for (var i = 1; i<=n; i++) 
+			{
+				let row = "";
+				for (var j = 1; j <= i; j++) 
+				{
+					row = row+"   "+j;
+				}
+				console.log(row);
+			}	
+	}
+
+		
+	
+	function answer9() {
+		let x = prompt("Enter number");
+		if((!isNaN(x)) && x>0 )
+		{
+			showpattern(x);	
+		}
+		else
+		{
+			console.log("Please Provide Number only");
+		}
+		
+
+	}
+
+	//answer10
+
+	function answer10(event,arr) {
+		console.log(arr.reverse());		
+	}
+
+	//answer11
+	
+	function answer11(event) {
+		var activities = [
+	["Work",9],
+	["Eat",1],
+	["Commute",2],
+	["Play Game",1],
+	["Sleep",1],
+	["Sleepy",1]
+	];
+	var linelength = getmaxlength()+10;
+	var maxspace = getmaxlength();
+	function patterntemplate() {
+		//let line = "________________________________"________"; 
+		
+		
+		let verticales = "|";
+		console.log(topline()+"\n"+getchar(" ",3)+verticales+' (index) |'+getchar(' ',getrequiredcount(1))+"0"+getchar(' ',getrequiredcount(1))+verticales+getchar(' ',1)+"1"+getchar(' ',1)+verticales+"\n"+topline());
+		for (var i = 0; i < activities.length; i++) {
+			console.log(getchar(" ",3)+verticales+'    '+i+'    |'+getchar(' ',getrequiredcount(activities[i][0].length))+activities[i][0]+getchar(' ',getrequiredcount(activities[i][0].length))+verticales+getchar(' ',1)+activities[i][1]+getchar(' ',1)+verticales);
+		}
+
+	}
+
+	function topline() {
+		let line = getchar("_",linelength);
+		let result =getchar(" ",3)+line;
+		return result;
+
+	}
+
+	function getchar(char,nooftimes) {
+		let result = "";
+		for (var i = 0; i<nooftimes*2; i++) {
+			result+=char;
+		}
+		return result;
+	}
+
+	function getmaxlength(deduct = 0) {
+		let maxlength = 0; 
+		for (let i = 0; i < (activities.length-1); i++) 
+		{
+			let y = (activities[i][0].length-1);
+			if(y>maxlength)
+			{
+				maxlength = y;
+			}
+		}
+	
+		return maxlength;
+	}
+	function getrequiredcount(deduct = 0) {
+		let maxlength = maxspace;
+		maxlength = (maxlength/2);
+		maxlength = maxlength-(deduct/4);
+		if(deduct%2==0)
+		{
+			maxlength+=0.5;
+		}
+		
+		return maxlength;
+	}
+	patterntemplate();
+	}
+
+	//answer12
+	function queue(arr,item) {
+		
+		arr.push(item);
+		arr.shift();
+		return item;
+
+	}
+	
+
+	function answer12() {
+		let testarr = [1,2,3,4,5];
+		console.log("Before: "+JSON.stringify(testarr));
+		console.log(queue(testarr,6));
+		console.log("After: "+JSON.stringify(testarr));
+	}
+
+	//answer13
+
+	function sumOfArrayElem(arr) {
+		let result = 0;
+		for (let i = arr.length - 1; i >= 0; i--) {
+			 result = result+arr[i];
+		}
+		return result
+	}
+
+	function answer13(event,arr) {
+		console.log(sumOfArrayElem(arr));
+	}
+
+
+	//answer14
+
+	function getsum(arr,i=0) {
+		let result = arr[i];
+		if(i<arr.length-1)
+		{
+			result = result+getsum(arr,i+1);
+		}
+		return result
+	}
+
+
+	function getpro(arr,i = 0) {
+		let result = arr[i];
+		if(i<arr.length-1)
+		{
+			result = result*getpro(arr,i+1);
+		}
+		return result;
+	}
+
+	function answer14(event,arr) {
+		console.log(getsum(arr));
+		console.log(getpro(arr));
+	}
+
+
+	//answer15
+
+	function isEven(value = null) {
+			if(value%2 == 0)
+			{
+				return true;
+			}
+			return false;
+		}
+
+	function output(arr,sum) {
+		let result = "";
+		let outputformat;
+		for (var i = 0; i < arr.length; i++) {
+			result =" "+result+arr[i]+"+";
+		}
+		outputformat = result.substring(0,result.length-1);
+		console.log(outputformat+"="+sum);
+	}
+
+	function answer15(event,arr) {
+		let evensum,oddsum;
+		evensum = 0;
+		oddsum = 0;
+		evenarr = [];
+		oddarr = [];
+		for (let i = 0; i<arr.length; i++) {
+			if(isEven(arr[i]))
+			{
+				evensum = arr[i]+evensum;
+				evenarr.push(arr[i]);
+			}
+			else
+			{
+				oddarr.push(arr[i]);
+				oddsum = arr[i]+oddsum;
+			}
+		}
+		/*console.log(evenarr);
+		console.log(oddarr);
+		console.log(evensum);
+		console.log(oddsum);
+		*/
+		output(evenarr,evensum);
+		output(oddarr,oddsum);
+
+	}
+
+	//answer16
+
+	function answer16() {
+		for (let i = 1; i <= 12; i++) {
+			console.log("Table of "+i);
+			for (let j = 1; j <= 10; j++) {
+				console.log(i+"X"+j+"="+(i*j));
+			}
+		}
+	}
+
+
+	//answer17
+
+	function getarray() {
+		arr = [];
+		let rang;
+		do{
+			rang = parseInt(prompt("Enter the Number:"));
+			if(rang.toString()  == "NaN" || rang<0)
+			{
+				console.log("Please enter a Valid No. and greater then 0");
+			}
+			else
+			{
+				arr.push(rang);
+			}
+		}while(rang!=0)
+		arr.pop();
+		return arr;
+
+	}
+
+	function answer17(event,arr) {
+		let max = 0;
+		for (let i = 0; i < arr.length; i++) {
+			if(arr[i]>max)
+			{
+				max = arr[i];
+			}
+		}
+		console.log(max);
+	}
+
+	//answer18
+	function answer18(){
+		let rang = parseInt(prompt("Enter the Number:"));
+		if(rang.toString() == "NaN" || rang<0)
+		{
+			console.log("Please enter a Valid No.");
+		}
+		else
+		{
+			console.log(isprime(rang));
+		}
+	}
+
+	//answer19
+
+	function isprime(n)
+	{
+    	if(n<2)
+        	{
+        		return false;
+        	}
+    
+    	for(let index=2; index<=Math.sqrt(n); index++)
+    	{
+        	if(n%index == 0)
+
+            	{
+            		return false;
+            	}
+       	}
+    	return true;
+    }
+
+	function answer19() 
+	{
+		let result = "";
+		let rang = parseInt(prompt("Enter the Range:"));
+		if(rang.toString() == "NaN" || rang<0)
+		{
+			console.log("Please enter a Valid No.");
+		}
+		else{
+			for(let i = 2;i<=rang;i++)
+			{
+				if(isprime(i))
+					{
+						result = result+i+",";
+					}
+			}	
+		}
+		console.log(result.substring(0,result.length-1));
+	}
+
+	//answer20
+
+	function isleap(i) 
+	{
+		if(i%100 == 0)
+		{
+			if(i%400==0)
+			{
+				return true;
+			}	
+		}
+		else
+		{
+			if(i%4==0)
+			{
+				return true;
+				
+			}
+		}
+		return false;
+			
+	}
+
+	function answer20() {
+		let counter = 0;
+		let i = new Date().getFullYear();
+		let increamenter = 1;
+		console.log("using while Loop");
+		while(counter<20)
+		{
+			if(isleap(i))
+			{
+				console.log(i);
+				counter++;
+				increamenter = 4;
+			}
+		i+=increamenter;
+		}
+		console.log("using for loop");
+		increamenter = 1;
+		i = new Date().getFullYear();
+		counter = 0;
+		for (let j = 0; counter < 20; j++) {
+			if(isleap(i))
+			{
+				console.log(i);
+				increamenter = 4;
+				counter++;
+			}
+			//console.log(j);
+		i+=increamenter;
+		}
+
+		console.log("using do while");
+		increamenter = 1;
+		counter = 0;
+		i = new Date().getFullYear();
+		let j = 0;
+		do{
+			if(isleap(i))
+			{
+				console.log(i);
+				increamenter = 4;
+				counter++;
+			}
+		i+=increamenter;
+		j++;
+		//console.log(j);
+		}while(counter < 20);
+
+	}
+
+	function getresult(event) {
+		let tempthis = this;
+		console.clear();
+		this.innerHTML = "Check Console";
+		switch(this.id){
+			case "Ans1":
+				answer1(event);
+				break;
+			case "Ans2":
+				answer2(event);
+				break;
+			case "Ans3":
+				answer3(event);
+				break;
+			case "Ans4":
+				answer4(event);
+				break;
+			case "Ans5":
+				answer5(event);
+				break;
+			case "Ans6":
+				answer6(event);
+				break;
+			case "Ans7":
+				answer7(event);
+				break;
+			case "Ans8":
+				answer8(event);
+				break;
+			case "Ans9":
+				answer9(event);
+				break;
+			case "Ans10":
+				answer10(event,getarray());
+				break;
+			case "Ans11":
+				answer11(event);
+				break;
+			case "Ans12":
+				answer12(event);
+				break;
+			case "Ans13":
+				answer13(event,getarray());
+				break;
+			case "Ans14":
+				answer14(event,getarray());
+				break;
+			case "Ans15":
+				answer15(event,getarray());
+				break;
+			case "Ans16":
+				answer16(event);
+				break;
+			case "Ans17":
+				answer17(event,getarray());
+
+				break;
+			case "Ans18":
+				answer18(event);
+				break;
+			case "Ans19":
+				answer19(event);
+				break;
+			case "Ans20":
+				answer20(event);
+				break;
+			default:
+				alert("Invalid Answer Selection");
+
+		}
+		setTimeout(function() {
+			tempthis.innerHTML = "Get Answer";
+		},2000);
+	}
+
+	document.addEventListener("DOMContentLoaded",initialiser);
+</script>
+</html>
