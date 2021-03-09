@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+</body>
+<script type="text/javascript">
+	function getarray() {
+		arr = [];
+		let rang;
+		do{
+			rang = parseInt(prompt("Enter the Number:"));
+			if(rang.toString()  == "NaN" || rang<0)
+			{
+				console.log("Please enter a Valid No. and greater then 0");
+			}
+			else
+			{
+				arr.push(rang);
+			}
+		}while(rang!=0)
+		arr.pop();
+		return arr;
+
+	}
+
+	//answer31
+
+	function searchElement(arr,n) {
+		/*using function
+		if(arr.indexOf(n)==-1)
+		{
+		return false;
+		}
+		return true;
+		*/
+		//using own logic
+		for (let i = 0; i < arr.length; i++) {
+			if(arr[i] == n)
+			{
+				return true;
+			}
+		}
+		return false;	
+	}
+	function searchElementhandler()
+	{
+		let arr = [1,23,23254314,23,213,2];
+		let n = 6;
+		if(searchElement(arr,n))
+		{
+			console.log(n+" is Present");
+		}
+		else
+		{
+			console.log(n+" is Absent");	
+		}
+
+	}
+	// answer30
+
+	function power(a,b) {
+		let result = 1;
+		if(b>=0)
+		{
+			for (let i = 1; i <= b; i++) {
+				result = result*a;
+			}
+		}
+		return result;
+	}
+
+
+	function isarmstrong(n) {
+		let tempa = String(n);
+		if(n>0 && tempa.length>1)
+		{
+			let result = 0;
+			for (let i = 0; i < tempa.length; i++) {
+				let te = parseInt(tempa.charAt(i));
+				//result = result + Math.pow(te,tempa.length);
+				result = result + power(te,tempa.length);
+			}
+			if(parseInt(n) == result)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	function answer30() {
+		let n = parseInt(prompt("Enter Number"));
+		console.log(isarmstrong(n));
+	}
+
+	//answer29
+
+	function ispalindrome(n) {
+		let temp = String(n);
+		if(n>0 && temp.length>2)
+		{
+			
+			for (let i = 0 ; i < temp.length/2; i++) {
+				if(temp.charAt(i) != temp.charAt((temp.length-1)-i))
+				{
+					return false;
+				}
+			}
+			return true;
+		}
+		return false;
+	}
+
+
+	function answer29(){
+		let n = parseInt(prompt("Enter n"));
+		if(ispalindrome(n))
+		{
+			console.log("Yes, "+n+" it is palindrome");
+		}
+		else
+		{
+			console.log("No, "+n+" it is not palindrome");
+		}
+	}
+
+	//answer28
+
+	function isVowel(b) {
+		let a = ['a','e','i','o','u'];
+		for (let i = 0; i < a.length; i++) {
+			if(b == a[i])
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	function countvowelandcons(a) {
+		let countvowel = 0,countcons = 0;
+		for (let i = 0; i < a.length; i++) {
+			if(isVowel(a.charAt(i)))
+			{
+				countvowel++;
+			}
+			else if(a.charAt(i)>='b' && a.charAt(i)<='z')
+			{
+				 countcons++;
+			}
+		}
+		return ([countvowel,countcons]);
+	}
+
+	function answer28() {
+			let a = prompt("Enter Word");
+			let re = countvowelandcons(a.toLowerCase());
+			console.log(re[0]+" Vowels");
+			console.log(re[1]+" Consonents");
+
+	}
+
+	//answer27
+
+	function adjust(a) {
+		for (let i = 0; i < a.length-1; i++) {
+			a[i] = a[i+1];
+		}
+		a.pop();
+		return a;
+	}
+
+	function makeshift(a) {
+		
+		let temp = a[0];
+		//using function
+		//a.splice(0,1);
+		//using own function
+		let result = adjust(a);
+		result.push(temp);
+		return result;
+	}
+
+	function answer27() {
+		let a = [1,2,3,4,5];
+		//make shift
+		console.log(makeshift(a));
+	}
+
+	//answer26
+
+	function secondlargest(a) {
+		let max = 0;sec = 0;
+		for (let i = 0; i < a.length; i++) {
+			if(max<a[i])
+			{
+				sec = max;
+				max = a[i];
+			}
+
+		}
+		return sec;
+	}
+
+
+	function answer26() {
+		let a = getarray();
+		//secondlargest(a);
+		console.log(secondlargest(a));
+	}
+
+	//answer25
+
+	function calculateratios(a) {
+		let pos = 0,neg = 0,zer = 0;
+		for (let i = 0; i < a.length; i++) {
+			if(a[i]==0)
+			{
+				zer++;
+			}
+			else
+			{
+				if(a[i]>0)
+				{
+					pos++;
+				}
+				else if(a[i]<0)
+				{
+					neg++;
+				}
+			}
+			
+		}
+		if((neg+pos+zer)==a.length)
+		{
+			console.log((neg/a.length).toFixed(6));
+			console.log((pos/a.length).toFixed(6));
+			console.log((zer/a.length).toFixed(6));
+		}
+		else
+		{
+			console.log("Calculation Error");
+		}
+	}
+
+	function answer25() {
+		let a = [-4, 3, -9, 0, 4, 1];
+		calculateratios(a);
+	}
+
+	//answer24
+
+	function Fibonacciseries(n)
+	{
+		let ini = 0,b = 1;
+		for (let i = 0; i < n; i++) {
+			console.log(ini);
+			let c = ini; 
+			ini = ini+b;
+			b=c;
+
+
+		}
+	}
+
+	function answer24() {
+		Fibonacciseries(10);
+	}
+
+	//answer23
+
+	function isEven(n) {
+		if(n%2==0)
+			return true;
+		else
+			return false;
+	}
+	function getGCD(a,b) {
+		if(a>0 && b>0)
+		{
+
+			if(b>a)
+			{
+				//swap
+				a = b+a;
+				b = a-b;
+				a = a-b;
+			}
+			let gcd = 1;
+			let i = 3;
+			if(isEven(a) && isEven(b))
+			{
+
+				i=2;
+			}
+			//for (let i = 2;i<b; i+=incrementor) {	
+			while(i<=b)
+				{
+				if(a%i == 0 && b%i == 0)
+				{
+					gcd = i;
+				}
+				i+=2;
+			}
+			return gcd;
+		}
+		return 0;
+	}
+
+	function answer23() {
+		let a = parseInt(prompt("Enter first"));
+		let b = parseInt(prompt("Enter Second"));
+
+		console.log(getGCD(a,b));
+	}
+
+	//answer22
+
+	function factorial(n) {
+		let result = 1;
+		if(n>=0)
+		{
+			for (let i = 1; i <= n; i++) 
+			{
+			result*=i;
+			}
+		}
+		return result;	
+		
+
+	}
+	function answer22() {
+		let a = parseInt(prompt("Enter Number"));
+		console.log(factorial(a));
+	}
+
+	//answer21
+
+	function showseries(n) {
+		let result ="";
+		if(n>0)
+		{
+			let te = "";
+			for (let i = 1; i <= n; i++) {
+				if(i%3==0)
+				{
+					te = "Fizz";
+				}
+				else
+				{
+					if(i%5==0)
+					{
+						te = "Buzz";
+					}
+					else
+					{
+						te = i
+					}
+				}
+				result+=(","+te);
+			}
+			result= result.slice(1);
+		}
+		console.log(result);
+	}
+
+	function answer21() {
+		let a = 100;
+		showseries(a);
+	}
+
+	//document.addEventListener("DOMContentLoaded", answer23);
+</script>
+</html>
